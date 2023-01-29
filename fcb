@@ -1,0 +1,65 @@
+#include <iostream>
+#include <fstream>
+#include <vector>
+#include <algorithm>
+
+const int NUM_SUBJECTS = 3;
+const int NUM_STUDENTS = 40;
+const int NUM_CLASSES_BIO = 3;
+const int NUM_CLASSES_MATH = 5;
+
+struct Student {
+    std::string name;
+    int marks[NUM_SUBJECTS];
+    int total;
+    int schoolRank;
+    int classRank;
+};
+
+void getMarks(Student students[], int numStudents) {
+    for (int i = 0; i < numStudents; i++) {
+        std::cout << "Enter name for student " << i + 1 &#8203;`oaicite:{"index":0,"invalid_reason":"Malformed citation << \": \";\n        std::cin >>"}`&#8203; students[i].name;
+        std::cout << "Enter marks for student " << i + 1 << ": ";
+        for (int j = 0; j < NUM_SUBJECTS; j++) {
+            std::cin >> students[i].marks[j];
+            students[i].total += students[i].marks[j];
+        }
+    }
+}
+
+void calculateRanks(Student students[], int numStudents) {
+    std::sort(students, students + numStudents, [](const Student &s1, const Student &s2) {
+        return s1.total > s2.total;
+    });
+    for (int i = 0; i < numStudents; i++) {
+        students[i].schoolRank = i + 1;
+    }
+}
+
+void printRanks(Student students[], int numStudents) {
+    std::cout << "School Rank\tName\tTotal Marks\n";
+    for (int i = 0; i < numStudents; i++) {
+        std::cout << students[i].schoolRank << "\t\t" << students[i].name << "\t" << students[i].total << "\n";
+    }
+}
+
+void writeToFile(Student students[], int numStudents) {
+    std::ofstream file("ranks.txt");
+    file << "School Rank\tName\tTotal Marks\n";
+    for (int i = 0; i < numStudents; i++) {
+        file << students[i].schoolRank << "\t\t" << students[i].name << "\t" << students[i].total << "\n";
+    }
+    file.close();
+}
+
+int main() {
+    std::cout << "Enter Bio stream students' marks: " << std::endl;
+    Student bioStudents[NUM_CLASSES_BIO * NUM_STUDENTS];
+    getMarks(bioStudents, NUM_CLASSES_BIO * NUM_STUDENTS);
+    calculateRanks(bioStudents, NUM_CLASSES_BIO * NUM_STUDENTS);
+
+    std::cout << "Enter Math stream students' marks: " << std::endl;
+    Student mathStudents[NUM_CLASSES_MATH * NUM_STUDENTS];
+    getMarks(mathStudents, NUM_CLASSES_MATH * NUM_STUDENTS);
+    calculateRanks(mathStudents, NUM_CLASS)
+}
